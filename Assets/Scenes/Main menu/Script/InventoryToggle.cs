@@ -1,18 +1,36 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
-public class NewBehaviourScript : MonoBehaviour
+public class InventoryToggle : MonoBehaviour
 {
-    // Start is called before the first frame update
+    [Header("Перетащи сюда панель инвентаря")]
+    public GameObject inventoryPanel; 
+
     void Start()
     {
-        
+        // При старте игры сразу прячем инвентарь
+        if (inventoryPanel != null)
+        {
+            inventoryPanel.SetActive(false);
+        }
     }
 
-    // Update is called once per frame
     void Update()
     {
-        
+        // Если игрок нажал кнопку Tab на клавиатуре
+        if (Input.GetKeyDown(KeyCode.Tab))
+        {
+            ToggleState();
+        }
+    }
+
+    // Эту функцию мы сможем вызывать и с экранной кнопки
+    public void ToggleState()
+    {
+        if (inventoryPanel != null)
+        {
+            // Проверяем: если включен - выключаем, если выключен - включаем
+            bool isActive = inventoryPanel.activeSelf;
+            inventoryPanel.SetActive(!isActive);
+        }
     }
 }
