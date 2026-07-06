@@ -1,30 +1,36 @@
 using UnityEngine;
-using UnityEngine.SceneManagement; // Нужно для переключения уровней
 
-public class NavigationManager : MonoBehaviour
+public class InventoryToggle : MonoBehaviour
 {
-    public GameObject mainMenu;
-    public GameObject levelSelectMenu;
+    [Header("Перетащи сюда панель инвентаря")]
+    public GameObject inventoryPanel; 
 
-    // Вызывается кнопкой "Играть"
-    public void GoToLevelSelect() {
-        mainMenu.SetActive(false);
-        levelSelectMenu.SetActive(true);
+    void Start()
+    {
+        // При старте игры сразу прячем инвентарь
+        if (inventoryPanel != null)
+        {
+            inventoryPanel.SetActive(false);
+        }
     }
 
-    // Вызывается кнопкой "Назад"
-    public void GoToMainMenu() {
-        levelSelectMenu.SetActive(false);
-        mainMenu.SetActive(true);
+    void Update()
+    {
+        // Если игрок нажал кнопку Tab на клавиатуре
+        if (Input.GetKeyDown(KeyCode.Tab))
+        {
+            ToggleState();
+        }
     }
 
-    // Вызывается кнопкой "Выход"
-    public void QuitGame() {
-        Application.Quit();
-    }
-
-    // Вызывается кнопками уровней
-    public void LoadLevel(int levelIndex) {
-        SceneManager.LoadScene(levelIndex);
+    // Эту функцию мы сможем вызывать и с экранной кнопки
+    public void ToggleState()
+    {
+        if (inventoryPanel != null)
+        {
+            // Проверяем: если включен - выключаем, если выключен - включаем
+            bool isActive = inventoryPanel.activeSelf;
+            inventoryPanel.SetActive(!isActive);
+        }
     }
 }
